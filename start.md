@@ -1,0 +1,1 @@
+This repo will contain learning notes for various technologies.
