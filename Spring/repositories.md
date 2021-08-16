@@ -2,10 +2,11 @@ This note will include __CrudRepository__, __JpaRepository__ and __PagingAndSort
 
 The **JpaRepository** extends the **PagingAndSortingRepository**.
 
-'''java
+```java
 
 public interface JpaRepository<T, ID> extends PagingAndSortingRepository<T, ID>, QueryByExampleExecutor<T> {}
 
+```
 
 The **PagingAndSortingRepository** extends the **CrudRepository**. 
 
