@@ -28,5 +28,5 @@ public interface JpaRepositoryImplementation<T, ID> extends JpaRepository<T, ID>
     }
 }
 ```
-Note that for an implementation of JpaRepository, we can extend it to JpaRepository<ModelType, IDType>, also, we can define a JpaSpecificationExecutor<ModelType> to support our further queries.
+Note that for an implementation of JpaRepository, we can extend it to __JpaRepository<ModelType, IDType>__, also, we can define a __JpaSpecificationExecutor<ModelType>__ to support our further queries.
 
