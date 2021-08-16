@@ -9,6 +9,13 @@ public interface JpaRepository<T, ID> extends PagingAndSortingRepository<T, ID>,
 ```
 
 The **PagingAndSortingRepository** extends the **CrudRepository**. 
+```java
+public interface PagingAndSortingRepository<T, ID> extends CrudRepository<T, ID> {
+    Iterable<T> findAll(Sort var1);
+
+    Page<T> findAll(Pageable var1);
+}
+```
 
 That means for our repositories, extend to **JpaRepository** will make them contain the full API of both **PagingAndSortingRepository** and **CrudRepository**.
 
