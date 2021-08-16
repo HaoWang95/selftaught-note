@@ -6,7 +6,6 @@ The **JpaRepository** extends the **PagingAndSortingRepository**.
 
 public interface JpaRepository<T, ID> extends PagingAndSortingRepository<T, ID>, QueryByExampleExecutor<T> {}
 
-'''
 
 The **PagingAndSortingRepository** extends the **CrudRepository**. 
 
