@@ -2,6 +2,8 @@
 A separated config server can be implemented with spring cloud config dependencies.
 The main purpose of using a spring cloud config is to separate configuration settings from all running instances of microservices. For each microservices(it can be 10 or 1000 instances of microservices), the configuration information for these services can be managed in a single config service instance and be loaded/refreshed at run time.
 
+Start with a Spring Cloud Configuration Server, then we add up other supportive applications step by step, like service registration & discovery, microservices apps.
+
 Except from Spring Cloud Configuration Server, other tools can also be used to build a configuration management solution. 
 
 > - Zookeeper, pretty complex to use
@@ -29,3 +31,7 @@ Typically, it should contain two properties:
 
 > - Location of the configuration server. spring.cloud.config.uri
 > - Name of the application. spring.application.name
+
+#### Basic setup for Spring Cloud Configuration Server
+
+#### Baisc integration using Spring Cloud Configuration Client in microservices apps
