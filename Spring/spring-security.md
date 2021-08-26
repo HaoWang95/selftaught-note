@@ -73,3 +73,44 @@ After implementing this feature, test the application again.
 ```PowerShell
 >curl -u alan:alanpassword123456  http://localhost:8081/test
 ```
+
+
+#### Endpoint authorization configuration
+By implementing the Sprint Security mechanism above, we can treat all endpoints equally important, that all endpoints assume we have a valid user managed by the application. Also, based on the basic Http authentication, we can override the previous setting easily. 
+
+Basic Authentication does not fit into our scenarios. And not all endpoints need to be secured, that means we need to choose authorization roles. By extending the **WebSecurityConfigurerAdapter** class and overriding the **configure** method, we can build a different scenario.
+
+(Delete previously tested code because we are going to do something more complex)
+
+For now, let's set all endpoints to be accessible. Permit all requests.
+```Java
+@Configuration
+public class AuthConfig extends WebSecurityConfigurerAdapter {
+    // override the configure method.
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.httpBasic();
+        http.authorizeRequests().anyRequest().permitAll();
+    }
+}
+```
+Then run the app the test the endpoint: we should notice that the authentication has been disabled.
+```PowerShell
+>curl http://localhost:8081/test
+```
+
+Now, let's set all endpoints to be accessible. All requests needs to be authenticated. By implementing this, we are actually changing the application to the initial starter stage.
+```java
+@Configuration
+public class AuthConfig extends WebSecurityConfigurerAdapter {
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.httpBasic();
+        http.authorizeRequests().anyRequest().authenticated();
+    }
+}
+```
+Test this change using the starter approach:
+```PowerShell
+>curl user:generated_password http://localhost:8081/test
+```
