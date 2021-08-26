@@ -6,8 +6,8 @@ A simple and easy starter to use Spring Securty is to include the Spring Securit
 
 ```xml
 <dependency>
-	    <groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-security</artifactId>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-security</artifactId>
 </dependency>
 ```
 
@@ -30,9 +30,19 @@ The dependency included in the pom.xml will enable the basic authentication for 
 
 When the application is started, (I set the server port to 8081)
 ```PowerShell
-curl http://localhost:8081
+curl http://localhost:8081/test
 ```
-
-
+By calling the api without any basic authentication data provided, we will get the 401 Unauthorized response.
+```json
+{"timestamp":"2021-08-26T03:42:47.695+00:00","status":401,"error":"Unauthorized","path":"/"}
+```
+If we call the api using basic user authentication:
+```PowerShell
+curl user:your_generated_password http://localhost:8081/test
+```
+We will see the responsed text.
+```text
+Test endpoint
+```
 
 
