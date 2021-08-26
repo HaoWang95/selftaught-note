@@ -162,7 +162,11 @@ In general, we will need
 > - Authentication controller, to handle login/register requests
 > - Functional or testing controller, that enable us to test public, private and accessing protected resources based on authorized roles.
 
-To clarify the ideas, we divide the problem using bottom-up approach: the general models can be divided into 2 classes, one is User, another is Role.
+To clarify the ideas, we divide the problem of designing the JWT mechanism with Spring Security using bottom-up approach: 
+- > The general models can be divided into 2 classes, one is User, another is Role.
+- > The models can extend JpaRepository
+- > Controllers to respond http requests, one is AuthController, another one is general endpoint controller.
+- > JWT validation, generation mechanism implementation from Spring Security
 
 * Models
     * User model, includes id, username, email, password, roles
@@ -174,7 +178,7 @@ To clarify the ideas, we divide the problem using bottom-up approach: the genera
 **Optional**: with repositories in mind, we can choose to implement service layer( UserService, RoleService) or use the repository in the controller directly.
 * Controllers
     * AuthController: receives and processes the login/register requests
-    * Testing/Functional Controller: expose resources
+    * Testing/Functional Controller: expose resources(We can keep using the two endpoints above for demo)
 * Security implementation
     * SecurityConfig which extends the WebSecurityConfigurerAdapter, we've done this in previous section. The name was AuthConfig
     * UserDetailServiceImpl which should implement the UserDetailService interface(Spring Security core concept)
