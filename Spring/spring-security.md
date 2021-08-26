@@ -45,4 +45,31 @@ We will see the responsed text.
 Test endpoint
 ```
 
-
+#### Next, let's override the default configuration provided by Spring Security
+For experimental purposes, we can use InMemoryUserDetailsManager to implement the user and its credential. 
+```java
+@Configuration
+public class AuthConfig {
+    // override the default spring security setting
+    @Bean
+    public UserDetailsService userDetailService(){
+        // We use the InMemoryUserDetailManager to simulate the process
+        InMemoryUserDetailsManager userDetailService = new InMemoryUserDetailsManager();
+        // Create a user profile
+        UserDetails user = User.withUsername("alan").password("alanpassword123456").authorities("read").build();
+        userDetailService.createUser(user);
+        return userDetailService;
+    }
+    
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        // The NoOpPasswordEncoder processes passwords as plaintext.
+        // The reason to treat passwords as plaintext is because in UserDetailService(), the created password is plaintext
+        return NoOpPasswordEncoder.getInstance();
+    }
+}
+```
+After implementing this feature, test the application again.
+```PowerShell
+>curl -u alan:alanpassword123456  http://localhost:8081/test
+```
