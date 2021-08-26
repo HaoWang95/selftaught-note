@@ -47,6 +47,7 @@ Test endpoint
 ```
 
 #### Next, let's override the default configuration provided by Spring Security
+**A very important concept in Spring Security is UserDetailServices**,  
 For experimental purposes, we can use InMemoryUserDetailsManager to implement the user and its credential. 
 ```java
 @Configuration
@@ -150,4 +151,7 @@ By testing these two endpoints, we can see different results.
 >curl http://localhost:8081/greeting
 ```
 
-***Above is the most basic usage of Spring Security***
+### Spring Security general concepts
+> - WebSecurityConfigureAdapter, this is our of the core parts of normal Spring Security implementation. It provides 3 different configure methods we can override.
+> - UserDetailService, this is an interface that has a method to load User by username and returns a UserDetails object that Spring Security can use for authentication and validation.
+> - UserDetails is the object returned from UserDetailService lookup, it contains username, password, authorities and other information to build an Authentication object
