@@ -162,12 +162,12 @@ In general, we will need
 > - Authentication controller, to handle login/register requests
 > - Functional or testing controller, that enable us to test public, private and accessing protected resources based on authorized roles.
 
-To clarify the ideas, we divide the problem using bottom-up approach:
-The general models can be divided into 2 classes, one is User, another is Role.
+To clarify the ideas, we divide the problem using bottom-up approach: the general models can be divided into 2 classes, one is User, another is Role.
+
 * Models
     * User model, includes id, username, email, password, roles
     * Role model, name
-With models in mind, use the common JpaRepository for both of the models.
+
 * Repositories
     * UserRepository that extends JpaRepository<User, Long>
     * RoleRepository that extends JpaRepository<Role, Long>
@@ -182,4 +182,4 @@ With models in mind, use the common JpaRepository for both of the models.
     * JwtAuthenticationEntry which implements the AuthenticationEntryPoint
     * JwtTokenFilter which extends the OncePerRequestFilter(This is to validate the request for each time our app receives a http request)
     * JwtUtils provides static methods to generate, and validate JWT
-For database, choose the corresponding connector.
+-----------------------------------------------------------------------------
