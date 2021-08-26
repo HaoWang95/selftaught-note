@@ -187,3 +187,55 @@ To clarify the ideas, we divide the problem of designing the JWT mechanism with 
     * JwtTokenFilter which extends the OncePerRequestFilter(This is to validate the request for each time our app receives a http request)
     * JwtUtils provides static methods to generate, and validate JWT
 -----------------------------------------------------------------------------
+
+### Setting up dependencies for the project
+We have spring boot starter security dependency already resolved at the start of the doc.
+```XML
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+```
+Now we need Jpa, database, and jwt dependency.
+```XML
+<!-- Dependency for JWT, quite popular in Maven central, we'll use this dependency	-->
+<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
+<dependency>
+	<groupId>io.jsonwebtoken</groupId>
+	<artifactId>jjwt</artifactId>
+	<version>0.9.1</version>
+</dependency>
+
+<!-- Dependency for Jpa -->
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-data-jpa</artifactId>
+</dependency>
+
+<!-- Dependency for h2 -->
+<dependency>
+	<groupId>com.h2database</groupId>
+	<artifactId>h2</artifactId>
+	<scope>runtime</scope>
+</dependency>
+
+<!-- Dependency for mysql	-->
+<dependency>
+	<groupId>mysql</groupId>
+	<artifactId>mysql-connector-java</artifactId>
+	<scope>runtime</scope>
+</dependency>
+```
+The corresponding settings in application.properties
+```
+# For h2 
+spring.datasource.url=jdbc:h2:mem:test
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=user
+spring.datasource.password=password
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.h2.console.enabled=true
+
+# For mysql
+
+```
