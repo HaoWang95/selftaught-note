@@ -56,7 +56,7 @@ public class AuthConfig {
         // We use the InMemoryUserDetailManager to simulate the process
         InMemoryUserDetailsManager userDetailService = new InMemoryUserDetailsManager();
         // Create a user profile
-        UserDetails user = User.withUsername("alan").password("alanpassword123456").authorities("read").build();
+        UserDetails user = User.withUsername("alan").password("alanpassword123456").authorities("read").build(); // Do not forget the autorities
         userDetailService.createUser(user);
         return userDetailService;
     }
@@ -114,3 +114,39 @@ Test this change using the starter approach:
 ```PowerShell
 >curl user:generated_password http://localhost:8081/test
 ```
+
+#### Set our specified route under protection and set public routes available to everyone.
+Now we set our test endpoint being public to everyone, and create a new endpoint called greeting and set it to be authenticated.
+Create a new endpoint greeting.
+```Java
+@RestController
+public class TestEndpoint {
+    @GetMapping("/test")
+    public String testIndex(){
+        return "Test endpoint";
+    }
+
+    @GetMapping("/greeting")
+    public String greeting(){
+        return "Hello everyone";
+    }
+}
+```
+
+Set the **/test** to be public and secure the **/greeting**
+```java
+@Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.httpBasic();
+        http.authorizeRequests()
+                .antMatchers("/test").permitAll()  // /test endpoint are now public
+                .antMatchers("/greeting").authenticated(); // greeting requires authentication
+    }
+```
+By testing these two endpoints, we can see different results.
+```PowerShell
+>curl http://localhost:8081/test
+>curl http://localhost:8081/greeting
+```
+
+### Getting started with self-implemented security mechanism with Spring Security
