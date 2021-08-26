@@ -1,4 +1,5 @@
 ## Spring Security
+Spring Security contains huge lists of implementation details, it is also a key point to combine Spring Boot with Spring Security to build Java applications.
 
 ### Get started with Spring Security
 #### A starter case
@@ -115,7 +116,7 @@ Test this change using the starter approach:
 >curl user:generated_password http://localhost:8081/test
 ```
 
-#### Set our specified route under protection and set public routes available to everyone.
+#### Set our specified routes under protection and set public routes available to everyone.
 Now we set our test endpoint being public to everyone, and create a new endpoint called greeting and set it to be authenticated.
 Create a new endpoint greeting.
 ```Java
@@ -139,7 +140,7 @@ Set the **/test** to be public and secure the **/greeting**
     protected void configure(HttpSecurity http) throws Exception {
         http.httpBasic();
         http.authorizeRequests()
-                .antMatchers("/test").permitAll()  // /test endpoint are now public
+                .antMatchers("/test").permitAll()  // /test endpoint is now public
                 .antMatchers("/greeting").authenticated(); // greeting requires authentication
     }
 ```
@@ -149,4 +150,4 @@ By testing these two endpoints, we can see different results.
 >curl http://localhost:8081/greeting
 ```
 
-### Getting started with self-implemented security mechanism with Spring Security
+***Above is the most basic usage of Spring Security***
