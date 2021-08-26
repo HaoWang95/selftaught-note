@@ -196,7 +196,7 @@ We have spring boot starter security dependency already resolved at the start of
 	<artifactId>spring-boot-starter-security</artifactId>
 </dependency>
 ```
-Now we need Jpa, database, and jwt dependency.
+Now we need Jpa, database, and jwt dependencies.
 ```XML
 <!-- Dependency for JWT, quite popular in Maven central, we'll use this dependency	-->
 <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
@@ -237,5 +237,147 @@ spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
 spring.h2.console.enabled=true
 
 # For mysql
+# connect to a test db called myservice
+spring.datasource.url=jdbc:mysql://localhost:3306/myservice?useSSL=false
+spring.datasource.username= root
+spring.datasource.password= root
+spring.jpa.database-platform=org.hibernate.dialect.MariaDB10Dialect
+# create create-drop update validate, we choose default update
+spring.jpa.hibernate.ddl-auto=update
+```
+
+```Java
+// RoleType definition
+public enum RoleType {
+    ROLE_USER,
+    ROLE_ADMIN
+}
+
+// Role definition
+@Entity
+@Table(name = "roles")
+public class Role {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "roletype")
+    private RoleType roleType;
+
+    public Role(RoleType roleType) {
+        this.roleType = roleType;
+    }
+
+    public Role(){}
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public RoleType getRoleType() {
+        return roleType;
+    }
+
+    public void setRoleType(RoleType roleType) {
+        this.roleType = roleType;
+    }
+}
+
+
+// User definition
+
+@Entity
+@Table(name = "users")
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "username", nullable = false)
+    private String userName;
+
+    @Column(name = "email",nullable = false)
+    @Email
+    private String email;
+
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @ManyToMany
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name="user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
+
+    public User(){}
+
+    public User(String userName, String email, String password){
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+}
+```
+With the entity class defined, we can easily have the repositories
+```Java
+// Role repository
+@Repository
+public interface RoleRepository extends JpaRepository<Role, Long> {
+    Optional<Role> findByRoleType(RoleType type);
+}
+
+// User repository
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+
+    Optional<User> findByUserName(String userName);
+
+    Boolean existsByUserName(String userName);
+
+    Boolean existsByEmail(String email);
+}
 
 ```
