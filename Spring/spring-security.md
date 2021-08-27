@@ -246,7 +246,8 @@ spring.jpa.database-platform=org.hibernate.dialect.MariaDB10Dialect
 # create create-drop update validate, we choose default update
 spring.jpa.hibernate.ddl-auto=update
 ```
-With application properties defined, we implement the basic entities. *** Note: in our User entity, we choose to use username instead of userName. The reason to do this is to be consistent with definitions in UserDetails and User of Spring Security ***
+With application properties defined, we implement the basic entities. 
+**Note: in our User entity, we choose to use username instead of userName. The reason to do this is to be consistent with definitions in UserDetails and User of Spring Security.**
 ```Java
 // RoleType definition
 public enum RoleType {
@@ -401,8 +402,99 @@ public class User implements UserDetails, CredentialsContainer {
   // More code omitted here
 }
 ```
-Our implementation:
+Our implementation, just contain the necessary fields.
 ```Java
+public class UserDetailsImpl implements UserDetails {
+    private static final long serialVersionUID = 1L; // Keep it the same value with User in Spring Security
+    private Long id;
+    private String username;
+    private String email;
+    @JsonIgnore
+    private String password;
+    private Collection<? extends GrantedAuthority> authorities;
 
+    public UserDetailsImpl(Long id, String username, String email, String password, Collection<? extends GrantedAuthority> authorities){
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.authorities = authorities;
+    }
+    
+    public static UserDetailsImpl build(User user){
+        List<GrantedAuthority> authorities = 
+                user.getRoles()
+                .stream()
+                .map(role -> new SimpleGrantedAuthority(role.getRoleType().name()))
+                .collect(Collectors.toList());
+        return new UserDetailsImpl(user.getId(), user.getUsername(), user.getEmail(), user.getPassword(), authorities);
+    }
+    
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj){
+            return true;
+        }
+        if(obj == null || getClass() != obj.getClass()){
+            return false;
+        }
+        UserDetailsImpl userDetails = (UserDetailsImpl) obj;
+        return Objects.equals(id, userDetails.id);
+    }
+}
+```
+
+Next, we implements the UserDetailsService that loads the user information by username.
+```Java
+@Service
+public class UserDetailsServiceImpl implements UserDetailsService {
+    @Autowired
+    UserRepository userRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository
+                .findByUsername(username)
+                // In UserRepository, we used Optional<User>, needs to check if it is null
+                .orElseThrow(() -> new UsernameNotFoundException("User data not found"));
+        // By using the static UserDetailsImpl.build(userInstance), build a UserDetails instance
+        return UserDetailsImpl.build(user);
+    }
+}
 ```
 
