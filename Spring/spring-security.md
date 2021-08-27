@@ -158,6 +158,7 @@ By testing these two endpoints, we can see different results.
 > - SecurityContext, 
 
 ### Workflow to implement a JWT mechanism
+#### **The design and thinking of how to implement JWT**
 In general, we will need
 > - Authentication controller, to handle login/register requests
 > - Functional or testing controller, that enable us to test public, private and accessing protected resources based on authorized roles.
@@ -245,7 +246,7 @@ spring.jpa.database-platform=org.hibernate.dialect.MariaDB10Dialect
 # create create-drop update validate, we choose default update
 spring.jpa.hibernate.ddl-auto=update
 ```
-
+With application properties defined, we implement the basic entities. *** Note: in our User entity, we choose to use username instead of userName. The reason to do this is to be consistent with definitions in UserDetails and User of Spring Security ***
 ```Java
 // RoleType definition
 public enum RoleType {
@@ -299,7 +300,7 @@ public class User {
     private Long id;
 
     @Column(name = "username", nullable = false)
-    private String userName;
+    private String username;
 
     @Column(name = "email",nullable = false)
     @Email
@@ -314,8 +315,8 @@ public class User {
 
     public User(){}
 
-    public User(String userName, String email, String password){
-        this.userName = userName;
+    public User(String username, String email, String password){
+        this.username = username;
         this.email = email;
         this.password = password;
     }
@@ -326,14 +327,6 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public String getEmail() {
@@ -359,6 +352,14 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }
 ```
 With the entity class defined, we can easily have the repositories
@@ -381,3 +382,27 @@ public interface UserRepository extends JpaRepository<User, Long> {
 }
 
 ```
+
+#### **Security related services**
+Now with basic code generated, we need to have our UserDetails class implementation to represent the UserDetails in Spring Security. Then we need to briefly implement a UserDetailServiceImpl which should ovrride the loadUserByUsernme method. If we are confused why we are doing this, please refer to the source implementation of User and UserDetails.
+
+By default, Spring Security provides us a very handy implementation which can represent the user instance, this class is User, below is the implementation of the User class in Spring Security. What we are going to implement is quite similiar with this User class.
+```Java
+public class User implements UserDetails, CredentialsContainer {
+    private static final long serialVersionUID = 550L;
+    private static final Log logger = LogFactory.getLog(User.class);
+    private String password;
+    private final String username;
+    private final Set<GrantedAuthority> authorities;
+    private final boolean accountNonExpired;
+    private final boolean accountNonLocked;
+    private final boolean credentialsNonExpired;
+    private final boolean enabled;
+  // More code omitted here
+}
+```
+Our implementation:
+```Java
+
+```
+
