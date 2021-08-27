@@ -479,7 +479,7 @@ public class UserDetailsImpl implements UserDetails {
 }
 ```
 
-Next, we implements the UserDetailsService that loads the user information by username.
+Next, we implement the UserDetailsService that loads the user information by username.
 ```Java
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -494,6 +494,54 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User data not found"));
         // By using the static UserDetailsImpl.build(userInstance), build a UserDetails instance
         return UserDetailsImpl.build(user);
+    }
+}
+```
+Now, we have the basic loaders prepared.
+In the application.properties, include the jwt secret value and a expiration value:
+```
+# Then we can use them to generate and validate jwt tokens
+app.jwtSecret=jwtSecret
+app.jwtExpirations=36000000
+```
+A simple jwt util class that generates, and validate tokens.
+```Java
+public class JwtUtils {
+    private static final Logger log = LoggerFactory.getLogger(JwtUtils.class);
+
+    @Value("${app.jwtSecret}")
+    private String jwtSecret;
+
+    @Value("${app.jwtExpirations}")
+    private int jwtExpirations;
+
+    // Generate a token
+    public String generateJwt(Authentication authentication){
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        return Jwts.builder()
+                .setSubject((userDetails.getUsername()))
+                .setExpiration(new Date(new Date().getTime() + jwtExpirations))
+                .setIssuedAt(new Date())
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .compact();
+    }
+
+    public String getUserNameFromJwt(String jwtToken){
+        return Jwts.parser()
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(jwtToken)
+                .getBody()
+                .getSubject();
+    }
+
+    public boolean validateJwt(String authToken){
+        try {
+            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
+            return true;
+        }catch (Exception e){
+            log.error("Jwt validation exception: {}", e.getMessage());
+        }
+        return false;
     }
 }
 ```
