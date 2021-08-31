@@ -31,3 +31,6 @@ Design patterns can be categorized as 3 types.
     * State
     * Strategy
     * Template
+It might take time to truely understand design patterns. Design pattern generally tackle the problem of 'change'. **Encalpsulate what varies so it won't affect the rest of the code.** And **Fewer unintended consequences from code change and more flexibility in the system.**
+
+## **Factory pattern**
