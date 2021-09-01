@@ -1,5 +1,9 @@
 # **Material UI**
 
+To use material ui, first install the dependencies in a React app.
+> - npm install @material-ui/core or yarn add @material-ui/core 
+> - npm install @material-ui/styles or yarn add @material-ui/styles
+
 ## Theming
 To customize the theme, we need a **ThemeProvider** component to inject a theme into our app.
 *Note: Material ui components come with a default theme.*
@@ -127,3 +131,7 @@ The default theme object exploration:
     *  modal: 1300
     *  snackbar: 1400
     *  tooltip: 1500
+
+Though there are tons of attributes provided by default theme in material ui. Common used attributes are mainly about palette and typography. 
+
+The API we can use to create a theme is **createTheme(options, ...args) => theme**
