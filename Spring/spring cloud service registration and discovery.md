@@ -18,5 +18,3 @@ Here are what the service registration and service discovery layer provides:
 Note: There are many other alternatives supported by Spring Cloud to perform the service discovery and service registration tasks. Like the famous **Apache ZooKeeper, etcd and Consul**.
 
 If we are going to use spring cloud load balancer, exclude spring-cloud-starter-ribbon dependency from eureka server dependency.
-
-
