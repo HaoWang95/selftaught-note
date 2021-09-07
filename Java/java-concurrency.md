@@ -45,3 +45,30 @@ public static void main(String[] args) {
 }
 ```
 The Thread constructor needs a Runnable object. Calling a Thread object's **start()** will perform the necessary initialization for the thread and then call that Runnable's run() method to start the task in the new thread.
+
+## Using Executors
+Using Executor to manage the execution of asynchronous tasks without having to explicitly manage the lifecycle of threads.
+```Java
+public static void executorTasksCachedThread(){
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        for(var i = 0; i < 5; i++){
+            executorService.execute(new CountDownRunnable(15));
+        }
+        executorService.shutdown();
+    }
+    
+    public static void executorTasksFixedThread(){
+        ExecutorService executorService = Executors.newFixedThreadPool(5);
+        for(var i = 0; i < 5; i++){
+            executorService.execute(new CountDownRunnable());
+        }
+        executorService.shutdown();
+    }
+```
+### Implements Callable<T> to return value from tasks.
+To deal with situation that a returned value is returned from tasks, implement the Callable instead of Runnable. The **run()** method would be **call()**.
+
+### Priority of a thread
+The order in which the CPU runs a set of threads is indeterminate, the scheduler will lean toward running the waiting thread with the highest priority first. Or we **setPriority()** and **getPriority()** of the existing thread.
+
+
