@@ -43,9 +43,10 @@ func main() {
 
 ```
 
-Go does not support classes. The feature in go is to **define methods on types**. So the definition of **function** and **methods** are different in go.
+Go does not support classes. The feature in go is to **define methods on types**.
 > - **A method is a function with a special __receiver__ argument**
 **The receiver appears in its own argument list between the func keyword and the method name**
+**A method is a function with a receiver argument.**
 ```Go
 import (
 	"fmt"
@@ -56,13 +57,7 @@ type Vertex struct {
 	X, Y float64
 }
 
-type User struct {
-    name, email string
-    age int
-}
-
 // the method Abs()'s receiver is v, whihc is a Vertext type
-// This syntax is werid
 func (v Vertex) Abs() float64 {
 	return math.Sqrt(v.X*v.X + v.Y*v.Y)
 }
@@ -73,3 +68,19 @@ func main() {
 }
 
 ```
+Another example can be:
+```Go
+type User struct {
+	name, email string
+	age         int
+}
+
+func (u User) UserInfo() string {
+	return u.name + ", " + u.email + ", " + strconv.FormatInt(int64(u.age), 10)
+}
+```
+
+> - Also, a method can be declared on a non-struct type
+Note that **it is only allowed to declare a method with a receiver whose type is defined in the same package as the method. It is not allowed to declare a method with a receiver whose type is defined in another package.**
+
+> - Pointer receivers, the receiver type can be a pointer.
