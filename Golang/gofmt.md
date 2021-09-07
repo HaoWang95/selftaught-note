@@ -1,5 +1,7 @@
 # **Go formats**
 fmt implements formatted I/O, similiar with C's printf and scanf.
+The basic date type of go is quite similiar with C.
+
 
 > - %v the value in a default format
 > - %#v Go-syntax representation of the value
