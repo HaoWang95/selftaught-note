@@ -84,3 +84,14 @@ func (u User) UserInfo() string {
 Note that **it is only allowed to declare a method with a receiver whose type is defined in the same package as the method. It is not allowed to declare a method with a receiver whose type is defined in another package.**
 
 > - Pointer receivers, the receiver type can be a pointer.
+This indicates that the receiver type can be *T for type T. The T itself can not be a pointer.
+Also, **functions that take a value argument must take a value of that specific type**. While methods **with value receivers take either a value or a pointer as the receiver when they are called**.
+
+### Choose between a value and a pointer receiver
+To use a pointer receiver.
+* The method can modify the value that its receiver points to.
+* Avoid copying the value on each method call. This can be efficient if the receiver is a large struct.
+* And methods on a give type should have either value or pointer receivers, but not a mixture of both.
+
+It needs some coding practice to know when to use a ptr and when not.
+* Change a struct obj, use pointer receiver, it will change the value in place.
