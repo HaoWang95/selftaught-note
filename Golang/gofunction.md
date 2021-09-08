@@ -95,3 +95,74 @@ To use a pointer receiver.
 
 It needs some coding practice to know when to use a ptr and when not.
 * Change a struct obj, use pointer receiver, it will change the value in place.
+
+### Stringer
+This method is **toString() in Java** and **__str__(self) in Python**
+```Go
+type IPAddr [4]byte
+
+func (ip IPAddr) String() string {
+	return fmt.Sprintf("%v.%v.%v.%v", ip[0], ip[1], ip[2], ip[3])
+}
+
+func testStringer() {
+	hosts := map[string]IPAddr{
+		"localhost": {127, 0, 0, 1},
+	}
+
+	for name, ip := range hosts {
+		fmt.Printf("%v:%v", name, ip)
+	}
+}
+```
+
+### Error handling
+Go programs express error state with error values.
+The error type is a built-in interface, which is pretty similiar to fmt.Stringer.
+```Go
+type error interface{
+	Error() string
+}
+```
+Functions can return an error value, and it can be examed by testing whether the error equals nil. And the fmt package looks for the error interface when printing values.
+
+Be familiar with the error definition in Golang
+
+```Go
+type ErrNegativeSqrt float64
+
+func (e *ErrNegativeSqrt) Error() string {
+	return fmt.Sprintf("can not Sqrt negative number: %v", float64(*e))
+}
+
+func MSqrt(x float64) (float64, error) {
+	nonNegative := ErrNegativeSqrt(x)
+	if nonNegative > 0 {
+		return math.Sqrt(float64(nonNegative)), nil
+	} else {
+		return float64(nonNegative), &nonNegative
+	}
+}
+
+func testErr() {
+	if r := throwError(); r != nil {
+		fmt.Println(r)
+	}
+	r, e := MSqrt(2)
+	if e != nil {
+		fmt.Println(e)
+	} else {
+		fmt.Printf("Val is %v\n", r)
+	}
+	fmt.Println(MSqrt(2))
+
+	r2, e2 := MSqrt(-2)
+	if e2 != nil {
+		fmt.Println(e2)
+	} else {
+		fmt.Println(r2)
+	}
+
+	fmt.Println(MSqrt(-2))
+}
+```
