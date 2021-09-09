@@ -166,3 +166,6 @@ func testErr() {
 	fmt.Println(MSqrt(-2))
 }
 ```
+
+> - Go supports anonymous functions, which can form closures.
+> 
