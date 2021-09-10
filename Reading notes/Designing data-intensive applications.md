@@ -38,5 +38,14 @@ The key issue here is if we add a filed to a schema, and the newer code writes a
     * Client can read/query data from either the leader or slave machines.But writes are only allowed on the master node.
     * Data must be written on the master node first, whenever the master node writes new data, it sends the data change to all of its slaves/followers.
     * Synchronous replication: followers is guaranteed to have an update-to-date copy of the data that is consistent with the leader node. If the leader node, for some reason, suddenly fails, we can be sure that the data is still available on the follower. But the main disadvantage is it is impractical to make followers synchronoous, because the leader must block all writes and blocks util the synchronous replica is available. If any of the follower is down, the leader will be locked.
-    * Semi-synchrnous, one of the followers is synchronous and others are asynchronous. If the synchronous follower becomes unavailable, one of the async followers is made sync.
+    * Semi-synchronous, one of the followers is synchronous and others are asynchronous. If the synchronous follower becomes unavailable, one of the async followers is made sync.
     * Asynchronous replication: master-slave based replication is often made asynchronous, if the leader fails and is not recoverable, any writes that have not been replicated are lost.
+
+## Processes to set up new followers
+    * Take a consistent snapshot of the leader's database. Most db has the feature of taking the snapshot without taking a lock on the entire database. Like innobackupex.
+    * Copy the snapshot to the new follower node
+    * The follower and the leader will connect, the snapshot is associated with an exact position in the leader's replication log. 
+    * When the follower has processed the backlog of data changes since the snapshot, it will catch up the leader.
+
+## Handlong outages of nodes.
+There are two situations, one is the follower failure and the other one is leader failure.
