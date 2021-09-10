@@ -15,3 +15,18 @@ Module is for dependency management. A module is a collection of related package
 ```Go
 go mod init FirstGoModule
 ```
+
+**A standard go project needs the following directoies**
+* src
+    * src contains source code
+* bin
+    * after using go install, this is the binary exeutable.
+* pkg
+    * dependency packages
+
+**GOROOT and GOPATH**
+* GOPATH is the home path where the Go code resides. It is a path variable that is used be the go tool to look for go code written by users.
+    * $HOME/go -> For linux
+    * %USERPROFILE%\go -> For windows
+* GOROOT is where the go installation took place. 
+    * For windows, it can be C -> Program Files -> go -> bin
