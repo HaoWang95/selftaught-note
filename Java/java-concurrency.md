@@ -46,7 +46,7 @@ public static void main(String[] args) {
 ```
 The Thread constructor needs a Runnable object. Calling a Thread object's **start()** will perform the necessary initialization for the thread and then call that Runnable's run() method to start the task in the new thread.
 
-## Using Executors
+### Using Executors
 Using Executor to manage the execution of asynchronous tasks without having to explicitly manage the lifecycle of threads.
 ```Java
 public static void executorTasksCachedThread(){
@@ -71,4 +71,9 @@ To deal with situation that a returned value is returned from tasks, implement t
 ### Priority of a thread
 The order in which the CPU runs a set of threads is indeterminate, the scheduler will lean toward running the waiting thread with the highest priority first. Or we **setPriority()** and **getPriority()** of the existing thread.
 
+### Runnable VS Thread
+Note that Runnable is an interface while Thread is a class. Implements Runnable is a preferred way. Because implementing from an interface allow us to inherit from a different class, whereas inheriting from Thread does not. By implementing a Runnable, the code can be more flexible.
 
+Also, prefer using an **Executor**.
+
+### Hide threading details by using an inner class.
