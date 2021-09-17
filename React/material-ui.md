@@ -135,3 +135,8 @@ The default theme object exploration:
 Though there are tons of attributes provided by default theme in material ui. Common used attributes are mainly about palette and typography. 
 
 The API we can use to create a theme is **createTheme(options, ...args) => theme**
+
+## Common settings in material ui and css
+### **display: flex**
+This is a common setting in a container. The container becomes flexible by setting the display property to flex. By default, it will be flexible horizontally. 
+Adding **flex-direction: column** to change it to be flexible vertically.
