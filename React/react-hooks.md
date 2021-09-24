@@ -25,3 +25,6 @@ In short conclusion, React can pause longer-running updates to quickly react to 
 
 ### **Suspense**
 Components built to work with **Suspense** can now *suspend* if they are not ready to return their UI.
+
+### **useRef**
+The useRef hook can be used to directly access DOM nodes, as well as persiste a mutable value across rerenders of a component. We could use useRef to obtain the underlying DOM nodes to perform DOM operations imperatively.
