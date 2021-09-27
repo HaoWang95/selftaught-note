@@ -36,3 +36,7 @@ function MyComponent() {
 
 ## Context
 Context provides a way to pass data through the component tree without having to pass props down manually at every level.
+
+## **Strict Mode**
+StrictMode is a tool for highlighting potential problems in an application. StrictMode does not render any visible UI. It activates additional checks and warnings for its descendants.
+Strict mode checks are run in development mode only, it does not impact the production build.
