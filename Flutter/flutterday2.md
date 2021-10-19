@@ -16,11 +16,46 @@ It is important to know how these UI elements work just like I'll need to know h
 ## The build method
 Every widget must have a build method. One of the most common example is a StatelessWidget that has a default build method with BuildContext as parameter. Note that a StatefulWidget has a createState method() that handles the state while the state object will be repsonsible to override the build method.
 ```Dart
+
 class SubmitButton extends StatelessWidget{
     Widget build(context){
         return Button(
             child: Text('Submit')
         );
+    }
+}
+// Also, we can implement a constructor if required to do so
+class SubmitButtonWithConstructor extends StatelessWidget{
+    final String buttonText;
+    SubmitButtonWithConstructor(this.buttonText);
+    Widget build(context){
+        return Button(
+            child: Text(buttonText)
+        );
+    }
+}
+```
+For StatefulWidget,
+```Dart
+// Inherits from StatefulWidget
+class DetailPage extends StatefulWidget{
+    // Every stateful widget must have a createState() method that returns a state object
+    @override
+    _DetailPageState createState() => _DetailPageState();
+}
+
+class _DetailPageState extends State<DetailPage>{
+    @override
+    initState(){
+        super.initState();
+        // initialization of the widget's state
+    }
+
+    // The logic of building a widget is transferred to the state class
+    // Implement action methods to handle state change as well
+    @override
+    Widget build(BuildContext context){
+        //
     }
 }
 ```
