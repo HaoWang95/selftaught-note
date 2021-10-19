@@ -6,11 +6,11 @@ It is a faily young but very ambitious programming language. As far as what I kn
 
 # The UI layouts.
 Every piece of UI is a widget. Based on notes of day1, there are some common widgets.
-> Layout: Row, Column, Scaffold, Stack
-> Structures: Button, Toast, MenuDrawer
-> Styles: TextStyle, Color, Padding
-> Animations: FadeInPhoto, transformations
-> Positioning and alignment: Centering and Padding.
+- Layout: Row, Column, Scaffold, Stack
+- Structures: Button, Toast, MenuDrawer
+- Styles: TextStyle, Color, Padding
+- Animations: FadeInPhoto, transformations
+- Positioning and alignment: Centering and Padding.
 It is important to know how these UI elements work just like I'll need to know how to style components to make pages look better.
 
 ## The build method
