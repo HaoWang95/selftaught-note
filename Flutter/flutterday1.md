@@ -21,6 +21,7 @@ The Scaffold widget is the base of the screen for a single page. It is used to i
 Life cycles for **UI components** are important in all front-end frameworks.
 > Stateless widget
     > widget -> constructor -> build(), rebuilds when configuration changes
+    
 > Stateful widget
     > widget -> constructor -> createState() to produce a state object
     > state object -> initState() -> build()
