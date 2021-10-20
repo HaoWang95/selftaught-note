@@ -29,3 +29,43 @@ class App extends StatelessWidget{
     }
 }
 ```
+By extending a **StatelessWidget**, **override the build method** will create the UI. Also, in the main.dart, we can define some basic theme settings which can be used or overriden across the app.
+```Dart
+class CounterApp extends StatelessWidget {
+  const CounterApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Second Flutter Demo',
+      theme: ThemeData(
+          // set the color to light blue and choose the default light mode to be light
+          primaryColor: Colors.lightBlue[800], brightness: Brightness.light),
+      home: const Home(),
+    );
+  }
+}
+```
+In Flutter, it can be quite easy to perform tasks like theme switch.
+```Dart
+class CounterApp extends StatelessWidget{
+    const CounterApp({Key? key}) : super(key: key)
+
+    // create a static ValueNotifier that can be accessed throughout the app
+    static final ValueNotifier<ThemeMode> themeToggle = ValueNotifier(ThemeMode.light);
+
+    @override
+    Widget build(BuildContext context){
+        return ValueListenableBuilder(
+            valueListenable: themeToggle,
+            builder(_, ThemeMode currentMode, __){
+                title: 'Second Flutter App',
+                theme: ThemeData(primarySwatch: Colors.indigo),
+                darkTheme: ThemeData.dark(),
+                themeMode: currentMode,
+                home: const Home(),
+            }
+        );
+    }
+}
+```
