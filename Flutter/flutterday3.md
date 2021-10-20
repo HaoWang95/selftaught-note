@@ -5,15 +5,15 @@ BuildContext can help to track the widget tree, like where the widget are locate
 
 # Some common widgets
 Here are some of the common widgets in Flutter which can work as a foundation to build apps.
-> Container
-> Row
-> Column
-> Image
-> Text
-> Icon
-> ElevatedButton(Some books or videos refer this as RaisedButton, RaisedButton is depreciated)
-> Scaffold(Fundemental starter to build Flutter apps)
-> AppBar
+* Container
+* Row
+* Column
+* Image
+* Text
+* Icon
+* ElevatedButton(Some books or videos refer this as RaisedButton, RaisedButton is depreciated)
+* Scaffold(Fundemental starter to build Flutter apps)
+* AppBar
 
 To get started and get hands dirty, consider to set the index page as a stateless widget.
 ```Dart
