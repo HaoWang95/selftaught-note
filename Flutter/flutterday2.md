@@ -6,10 +6,10 @@ It is a faily young but very ambitious programming language. As far as what I kn
 
 # The UI layouts.
 Every piece of UI is a widget. Based on notes of day1, there are some common widgets.
-- Layout: Row, Column, Scaffold, Stack
-- Structures: Button, Toast, MenuDrawer
-- Styles: TextStyle, Color, Padding
-- Animations: FadeInPhoto, transformations
+- Layout: Row, Column, Scaffold, Stack.
+- Structures: Button, Toast, MenuDrawer.
+- Styles: TextStyle, Color, Padding.
+- Animations: FadeInPhoto, transformations.
 - Positioning and alignment: Centering and Padding.
 It is important to know how these UI elements work just like I'll need to know how to style components to make pages look better.
 
@@ -62,3 +62,15 @@ class _DetailPageState extends State<DetailPage>{
 
 ## Widget Tree
 The procedures of building a Flutter app is to compose different widgets together to form a **widget tree**. A Flutter app is represented by a **widget tree** just like DOM in the browser.
+
+### Widget layout
+#### **Lay out multiple widgets vertically and horizontally**
+Use a **Row** widget to arrange widgets horizontally, and a **Column** widget to arrange widgets vertically.
+* **Row** and **Column** are two of the most commonly used layout widgets.
+* Each of them take a list of child widgets
+* A child widget can itself be a Row, Column, or other complex widget
+Control how a row or column aligns its children using **mainAxisAlignment** and **crossAxisAlignment** properties. **For a row, the main axis runs horizontally and cross axis runs vertically. For a column, the main axis runs vertically and the cross axis runs horizontally.**
+
+Personal note: Row and Column are more like FlexBox is CSS.
+
+Sizing widgets
