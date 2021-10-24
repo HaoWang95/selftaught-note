@@ -20,7 +20,7 @@ import this
 > - Using generator instead of lists. Know what is generator in Python and how to use a generator.
 Generator can produce a sequence of outputs for arbitarily large input because their working memory does not include all inputs and outputs.
 
-> - 37: Compose classes instead of nesting many levels of builtin-types
+>  37: Compose classes instead of nesting many levels of builtin-types
 ```python
 from collections import defaultdict
 '''
@@ -96,4 +96,4 @@ The code above can be complex, the bookkeeping of grade is getting complicated. 
     * Use namedtuple for lightweight, immutable data containers before you need the flexibility of a full class.
     * Move the code to using multiple classes when the internal state dictionaries get complicated.
 
-> - 38: Accept functions instead of classes for simple interfaces
+>  38: Accept functions instead of classes for simple interfaces
