@@ -97,3 +97,12 @@ The code above can be complex, the bookkeeping of grade is getting complicated. 
     * Move the code to using multiple classes when the internal state dictionaries get complicated.
 
 >  38: Accept functions instead of classes for simple interfaces
+
+> Know how to use @classmethod decorator
+@classmethod decorator is used to declare a method in the class as a class method that can be called using Class.method_name(). The class method can also be called using an object of the class.
+    > The first parameter of a class method must be cls, which can be used to access class attributes.
+    > The class method can only access the class attributes but not the instance attributes
+    > The class method can be called using ClassName.MethodName() and also using object.
+
+> Know how to use @staticmethod decorator.
+A static method does not receive any reference argument whether it is called by an instance of a class or by the class itself. A static method can not access either class attributes or instance attributes. 
