@@ -40,7 +40,7 @@ char* cp; // A pointer to char
 
 // In declarations, [] means array of, * means "pointer to", & means "address of"
 ```
-* * means "pointer to".
+* "*" means "pointer to".
 * & means "address of".
 ```c++
 char *p = &v[3] // p points to v's fourth element
