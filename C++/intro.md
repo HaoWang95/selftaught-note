@@ -1,10 +1,15 @@
 # C++ Magic
 1. C++ is a general-purpose programming language with a bias in system programming. 
 2. C++ is a general purpose programming language with providing a direct and efficient model combined with facilities for defining lightweight abstractions.
-3. 
+3. C++ is a language for developing and using elegant and efficient abstractions.
+
+> Leave no room for low-level language below C++. If you can write more efficient code in a lower-level language then that language will most likely become the system programming language of choice.
+> What you don't use you don't pay for. If programmers can hand-write reasonable code to simulate a language feature or a fundamental abstraction and provide even slightly better performance, someone will do so, and many will imitate. Therefore, a language feature and a fundamental abstraction must be designed not to waste a single byte or a single processor cycle compared to equivalent alternatives. This is known as zero-overhead principle.
 
 ## Learning C++
 No programming language is perfect. A programming language does not have to be perfect to be a good tool for building great systems. In fact, a general-purpose programming language cannot be perfect for all of the many tasks to which it is put. What is perfect for one task is often seriously flawed for another because perfection in one area implies specification. Thus, C++ was designed to be a good tool for building a wide variaty of systems and allow a wide variety of ideas to be expressed directly. 
 Java, compared with C++, is another general-purpose programming language as well. Java has a higher-level of abstraction which means it is not a good choice for system programming. But with the JVM specification, Java community embraces multiple options of JVM implementation which enables the language to run on numerious platforms just like C++. With auto memory management, programmers can focus more on the expressiveness of application logic instead of hardware/data structure usage management. This gives Java a good reputation for quick development.
 
 (Also these two languages are being complained the most after 2015. C++ has very obscured syntax and barely has clear definition of best practices because there can be a numerous way to code for the best practices. For Java, it is criticized for the code redundancy during development. Also, Java has lost many of its ecosystem and has become a main-stream choice of big companies for backend service.)
+
+The most important thing to do when learing a new technology(a programming language, a web framework, a technical tool or concept of programming) is to focus on fundamental concepts. For a programming language, focus on programming techniques that demonstrate the characteristic of ths language(such as resource mangement using scoped objects and the use of iterators, built-in data structures.) and not get lost in language-technical details. The purpose of learning a programming language is to become a better programmer, that is, to become more effective at designing and implementing new systems and at maintaining old ones. For this, an appreciation of programming and design techniques is for more important that understanding all the details. The understanding of technical details comes with time and practice.
