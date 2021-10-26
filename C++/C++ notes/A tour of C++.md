@@ -31,3 +31,69 @@ constexpr double n1 = square(4); //ok
 constexpr double n2 = square(var); //error: var is not a constant expression
 const double n3 = square(var); // Ok, may be evaluated at run time
 ```
+> Pointers, arrays, and references.
+The most fundamental collection of data is a contiguously allocated sequence of elements of the same type, which is an array. 
+```c++
+char c[6]; // A char array of length 6
+
+char* cp; // A pointer to char
+
+// In declarations, [] means array of, * means "pointer to", & means "address of"
+```
+* * means "pointer to".
+* & means "address of".
+```c++
+char *p = &v[3] // p points to v's fourth element
+char x = *p // *p is the object that p points to
+```
+
+If we don't want to copy the values during function call or looping, use the reference can avoid that.
+```c++
+int v[] {1,2,3,4,5,6};
+for(auto& item: container){
+    item ++;
+}
+```
+When we don't want to modify an argument but still don't want the cost of copying, we use the **const** reference.
+For example"
+```c++
+double sum(const vector<double>&);// using the reference to avoid copying and using const to avoid modification
+```
+> The Null Pointer
+There's only one **nullptr** shared by all pointer types.
+```c++
+double* doubleptr = nullptr;
+Link<Record>* list = nullptr;
+char* c = nullptr;
+```
+It is wise to check that a pointer argument actually points to something.
+```c++
+int count_x(const char*p, char x)
+    // count the number of occurences of x in p[]
+    // p can be a pointer const points to a char, or an array 
+{
+    if(p == nullptr){
+        return 0;
+    }
+    int count{0};
+    for(;*p!=0;++p){
+        if(*p==x){
+            count++;
+        }
+    }
+    return count;
+}
+// we can have another version of count_x using while loop
+int count_x_v2(const char* p, char x){
+    if(p==nullptr){
+        return 0;
+    }
+    int count{0};
+    while(*p){
+        if(*p==x){
+            count++;
+        }
+    }
+    return count;
+}
+```
