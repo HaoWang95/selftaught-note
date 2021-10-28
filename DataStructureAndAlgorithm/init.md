@@ -7,9 +7,9 @@ This folder contains data structure and algorithm practices. Even though it is n
 ---
 
 The programming language used to provide some examples will be:
-> C++
-> JAVA
-> GOLANG
-> PYTHON
-For each problem illustrated, data structure given, I'll try to provide an implementation of each of the languages above to have a better illustration and understanding. 
-It might be quite repeatitive to provide examples of different languages. But most languages tend to have their own philosophies in terms of expressing the same idea, therefore, let's see I hope to explore in depth of these ideas by using these languages. 
+* C++
+* JAVA
+* GOLANG
+* PYTHON
+For each problem illustrated, data structure given, I'll try to provide an implementation of each of the language above to have a better illustration and understanding. 
+It might be quite a repeatitive to provide examples of different languages. But most languages have their own concepts of programming, therefore, I hope to explore in depth of these ideas by using these languages. 
