@@ -9,5 +9,4 @@ const watch = (filePath) => {
 }
 
 const file = path.join(process.cwd(), 'file.txt');
-
 watch(file);
