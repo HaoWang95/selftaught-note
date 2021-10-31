@@ -1,5 +1,7 @@
 from _typeshed import Self
 from abc import ABC, abstractmethod
+from inspect import getmembers, isclass, isabstract
+
 
 class Car(ABC):
     """Abstract class definition for Car model"""
@@ -21,7 +23,7 @@ class Car(ABC):
 
 class TeslaCar(Car):
 
-    def __init__(self, name: str) -> None:
+    def __init__(self, name: str=None) -> None:
         self._name = name;
 
     @property
@@ -37,18 +39,50 @@ class TeslaCar(Car):
         del self._name
 
     def start(self):
-        return super().start()
+        print(f'Tesla {self._name} is started.')
 
     def run(self):
-        return super().run()
+        print(f'Tesla {self._name} is running')
 
     def stop(self):
-        return super().stop()
+        print(f'Tesla {self._name} is stopped')
 
 
 class Jeep(Car):
-    pass
+    def __init__(self, name=None) -> None:
+        self.name = name
+    
+    def run(self):
+        print(f'Jeep {self.name} is running')
+
+    def start(self):
+        print(f'Jeep {self.name} is started')
+
+    def stop(self):
+        print(f'Jeep {self.name} is stopped')
 
 
 class BMW(Car):
-    pass
+    def __init__(self, name) -> None:
+        self.name = name
+
+    def run(self):
+        print(f'BWM {self.name} is running')
+
+    def start(self):
+        print(f'BWM {self.name} is started')
+
+    def stop(self):
+        print(f'BMW {self.name} is stopped')
+
+
+class AbstractCarFactory(ABC):
+    @abstractmethod
+    def create_auto(self):
+        pass
+
+
+class TeslaFactory(AbstractCarFactory):
+    def create_auto(self):
+        self.tesla = tesla = TeslaCar(name="default")
+        return tesla
