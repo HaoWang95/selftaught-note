@@ -4,6 +4,7 @@ Prefer class decorators over metaclass
 """
 
 def my_class_decorator(cls):
+    """A basic class decorator"""
     for name, attr in vars(cls).items():
         print(f'{name}, {attr}')
 
