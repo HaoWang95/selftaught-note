@@ -25,3 +25,14 @@ The strategies of JPA:
 
 Single table inheritance is the default JPA strategy.
 One of the advantage of using inheritance in the Domain Model is the support of the polymorphic queries. When the application developer issues a select query against the entity.
+
+
+## @OneToOne 
+* **@OneToOne** using shared primary key
+```java
+
+@Entity(name = "authors")
+public class Author{
+    
+}
+```
