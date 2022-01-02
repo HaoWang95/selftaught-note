@@ -1,5 +1,21 @@
 # **Next.js**
 
+## Why I'm learning Next.js.(Remix is awesome as well, take a try)
+To build a complete web application with React from scratch, there are many details to consider:
+1. Code has to be bundled using a bundler like **`webpack`**(a new choice is **`Vite`**) and transformed using a compiler like **`Babel`**.
+2. Code splitting for production optimization.
+3. Statically pre-render some pages for performance and SEO. Also want to use some server-side rendering or client-side rendering.
+4. Need some server-side code for data store.
+
+
+### What does `Next.js` provide
+1. Page-based routing system(Check [`Remix`](https://remix.run/), it does something similar). With support for dynamic routes.
+2. Pre-rendreing, both [`static generation`](https://nextjs.org/docs/basic-features/pages#static-generation-recommended) and [`server side rendering`](https://nextjs.org/docs/basic-features/pages#server-side-rendering) are supported on per-page basis.
+3. Automatic code-splitting for faster page loads.
+4. Client-side routing with optimized prefetching.
+5. Built-in CSS and Sass support, and support any CSS-in-JS library.
+6. Dev env with [Fast refresh](https://nextjs.org/docs/basic-features/fast-refresh) support.
+
 > - Client-side navigation
 The `Link` component enables client-side navigation between two pages in the same Next.js app.
 Client-side navigation means that the page transition happens using JavaScript, which is faster than the default navigation done by the browser.
