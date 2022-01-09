@@ -4,4 +4,11 @@ This repo will contain **self-study notes** on web frameworks, programming langu
 
 Another reason is by writing and organizing these notes, I hope it can help the English writting skills. If I learned something, then I need to transform the learned idea or concept into well-expressed language. This is like speaking out what I've learned. **I hope this process will help me form a better sense of English writting and expression**.
 
-Each folder will represent a general tech skills or a general topic. For example, AWS folder will include my notes taken when studying AWS(I may also update the notes later so I won't promise all notes are up-to-date), like how to use ECS, EKS, SQS, and Fargate etc. Also I'll try my best to include coding snippets to illustrate ideas in each of the markdown file. Also, I'll provide **code files of different programming languages for some topics like Redis, Kafka, data structures, algorithms and some coding challenge problems**. 
+Each folder will represent a general tech skills or a general topic. For example, AWS folder will include my notes taken when studying AWS(I may also update the notes later so I won't promise all notes are up-to-date), like how to use ECS, EKS, SQS, and Fargate etc. Also I'll try my best to include coding snippets to illustrate ideas in each of the markdown file. Also, I'll provide **code files of different programming languages for some topics like Redis, Kafka, data structures, algorithms and some coding challenge problems**.
+
+### 2022 Learning Goals
+* GoLang
+* Rust
+* DevOps
+* Master Node.js
+* Unreal engine
