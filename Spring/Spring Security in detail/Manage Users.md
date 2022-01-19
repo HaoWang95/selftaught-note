@@ -124,3 +124,12 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 ```
 
 ## Build a sample app that implements Basic Spring Security
+* Define a User entity class that represents the user profile
+* Decorates the User entity with a AppUserDetails which implements the UserDetails Interface
+* Use Spring Data JPA to implement UserRepository that performs CRUD operations with User entity.
+* Create customed UserDetailsService that use UserRepository to find user data in db and decorates to a UserDetails
+* In Spring security configuration class, define the following beans
+  * PasswordEncoder bean that returns an instance of PasswordEncoder(There can be one or more beans to return PasswordEncoder)
+  * UserDetailsService bean that returns the instance of the customed UserDetailsService
+  * AuthenticationProvider bean that will have the authentication logic.(Or use DaoAuthenticationProvider)
+  * Override the configure methods, to set up AuthenticationManagerBuilder which will take the AuthenticationProvider bean and HttpSecurity configurations to set up basic authentication rules.
