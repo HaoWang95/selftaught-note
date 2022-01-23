@@ -124,12 +124,59 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 ```
 
 ## Build a sample app that implements Basic Spring Security
-* Define a User entity class that represents the user profile
-* Decorates the User entity with a AppUserDetails which implements the UserDetails Interface
+* Define a User entity class that represents the user profile.
+* Decorates the User entity with a customed UserDetails class which implements the UserDetails interface.
 * Use Spring Data JPA to implement UserRepository that performs CRUD operations with User entity.
-* Create customed UserDetailsService that use UserRepository to find user data in db and decorates to a UserDetails
-* In Spring security configuration class, define the following beans
-  * PasswordEncoder bean that returns an instance of PasswordEncoder(There can be one or more beans to return PasswordEncoder)
-  * UserDetailsService bean that returns the instance of the customed UserDetailsService
-  * AuthenticationProvider bean that will have the authentication logic.(Or use DaoAuthenticationProvider)
+* Create customed UserDetailsService and override loadByUsername that use UserRepository to find user data in db and decorates to a UserDetails
+* In Spring security configuration class, define the following beans.
+  * PasswordEncoder bean that returns an instance of PasswordEncoder(There can be one or more beans to return PasswordEncoder).
+  * UserDetailsService bean that returns the instance of the customed UserDetailsService.
+  * AuthenticationProvider bean that will have the authentication logic.(Or use DaoAuthenticationProvider).
   * Override the configure methods, to set up AuthenticationManagerBuilder which will take the AuthenticationProvider bean and HttpSecurity configurations to set up basic authentication rules.
+
+## Authorization
+To choose the requests to which to apply authorization configuration, use HttpSecurity matchers.
+* MVC matchers, use MVC expressions for path matching.
+* Ant matchers, use Ant expression for path matching.
+* regex matchers, use regex for path matching.
+
+> Prefer MVC matchers. We can avoid some of the risks involved with the way Spring maps paths to actions.
+
+
+## Understand and customize filters
+In Spring Security, HTTP filters manage each responsibility that must be applied to the request. The filters form a chain of responsibilities. A filter receives a request, executes its logic, and eventually delegates the request to the next filter in the chain.
+* Filters are HTTP filters, so by implementing the **`Filter` interface** from `javax.servlet`. As for other HTTP filter, you need to override the **doFilter()** method to implement the logic.
+* ServletRequest, which is the HTTP request.
+* ServletResponse, which is the HTTP response.
+* FilterChain, the chain of filters. The filter chain is a collection of filters.
+  
+Spring Security provides some filter implementations.
+* **BasicAuthenticationFilter**, http basic authentication.
+* **CsrfFilter**, cross-site request forgery(CSRF) protection.
+* **CorsFilter**, cross-origin resources sharing authorization rules.
+
+## CSRF protection and CORS
+**CSRF - Cross-site request forgery** is a web security vulnerability that allows an attacker to induce users to perform actions that they do not intend to perform.
+CSRF is enabled by default in Spring Security. CSRF attacks assume that a user is logged into a web application. They're tricked by the attacker into opening a page that contains scripts that execute actions in the same application the user was working on. Because the user was logged in, the forgery code can now impersonate the user and perform actions on their behalf. So the CSRF protections is to ensure only the frontend of web applications can perform mutation operations.
+
+* Basic theory for CSRF protection
+  * Before being able to do any action that could change data, a user must send a request using HTTP GET to see the web page. When this happens, the application generates a unique token. The application now accepts only requests for mutating operations that contain the unique value in the header, which is knowing the value of the token is proof that it is the app itself making the mutation request and not another system. Any page containing mutation calls(POST, PUT, DELETE) should receive through response the CSRF token, and the page must use the token to make mutation calls.
+  * The starting point of CSRF protection is a filter in the filter chain called **CsrfFilter**. The **CsrfFilter** uses a component called **CsrfTokenRepository** to manage the CSRF token values that generate new tokens, store tokens, and eventually invalidate these. **CsrfTokenRepository** stores the token on the HTTP session and generates the tokens as random universially unique identifiers.
+
+**CORS** The CORS mechanism works based on HTTP headers.
+* **Access-Control-Allow-Origin**, which foreign domains/origins can access resources in our service.
+* **Access-Control-Allow-Methods**, allowed Http methods
+* **Access-Control-Allow-Headers**, adds limitations to which headers you can use in a specific request.
+
+
+## A more practical example
+* The client calls the login endpoint with credentials(Normally username/email and password)
+* The business logic server calls the /user/auth endpoint of the authentication server to authenticate the user and send them an OTP.
+* The authentication server reaches the user in its database and authenticates user
+* If the user is authenticated, the authentication server sends an OTP to the user through SMS.
+* The client sends the OTP together with their username for the second authentication
+* The business logic server calls the authentication server to validate the OTP.
+* If the OPT is valid, the business logic server issues a token back to the client. The client uses this token to call any endpoint of the business logic server.
+
+### Understanding and using tokens
+Token is like an access card. A token is usually sent through an HTTP header by clients and tokens are often used in authentication and authorization architectures. Token provided a method that an application uses to prove it has authenticated a user, which allows the user to access the application's resources. One of the most widely used example is **`JWT`**.
