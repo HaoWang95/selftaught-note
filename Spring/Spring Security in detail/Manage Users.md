@@ -180,3 +180,51 @@ CSRF is enabled by default in Spring Security. CSRF attacks assume that a user i
 
 ### Understanding and using tokens
 Token is like an access card. A token is usually sent through an HTTP header by clients and tokens are often used in authentication and authorization architectures. Token provided a method that an application uses to prove it has authenticated a user, which allows the user to access the application's resources. One of the most widely used example is **`JWT`**.
+* Token helps aviod sharing credentials in all requests.
+* Define tokens with a short lifetime.
+* Invalidate tokens without invalidating credentials.
+* Tokens can also store details like user authorities that client needs to send in the request(This is for an easier implementation of token-based authorization).
+* Helps to delegate the authentication responsibility to another component in the system.
+
+
+## OAUTH 2 authentication architecture
+* All applications owneed by the organization use the authorization server to authenticate users.
+* The authorization server keeps users' credentials.
+This will eliminate the duplication of credentials representing the same individual.
+OAuth 2 components:
+* The resource server which hosts resources like user data or their authorized actions(roles)
+* The resource owner
+
+### Know how tokens are created for different grants.
+* **`Authorization code`**
+  * Make the authentication request
+    * User doesn't send the credentials to the client app, the user interacts directly with the authorization server.
+    >- The client redirects the user to an endpoint of the authorization server where they need to authenticate. Say we are using app A, and we want to access some protected resource that requires us to authenticate. The app opens a page for us with a login form on the authorization server that we must fill with our credentials.
+    >- The client redirects the user to the authorization server, the clients calls the authorization endpoint with the following details provided
+    1. **`response_type`**: with value code. This value tells the authorization server that the client expects a code. The client needs the code to obtain an access token.
+    2. **`client_id`**, the client_id identifies the client application.
+    3. **`redirect_uri`**, this value tells the authorization server where to redirect the user after successful authentication. The auth server might already know a default redirect URI for each client(Registered client app in auth server).
+    4. **`scope`**, granted authorities.
+    5. **`state`**, this is important as it defines a *CSRF* token used for the **CSRF protection**.
+    >- After being authenticated successfully on the auth server, the authorization server calls back the client on the redirect URI and privdes **a code and the state value**. The client checks the state value is the same as the one it sent in the request to confirm that it was not someone else attempting to call the redirect URI. The client uses the code to obtain an access token.
+  * Obtain an access token
+    * The code from the **step:** *Make the authentication request* is the client'f proof that the user is authenticated. Now the client calls the auth server with the code to get the token. For last step, the interaction was between the user and the auth server. In this step, the interaction is between the client and the authorization server.
+    * Why two steps? One step for the code and one more step for the token?
+    >- The auth server generates the first code as proof that the user directly interacted with it. The client receives this code and has to authenticate again using it and its credentials to obtain an access token.
+    >- Then the client uses the second token to access resources on the resource server.
+    >- **The simple fact is the auth server would call the redirect URI directly with an access token without making sure that it was indeed the right client receiving that token makes the flow less secure. By sending the authorization code first, the client has to prove again who they are by using their credentials to obtain an access token.**  
+
+  * Call the protected resource
+* **`Password`**
+  * The password grant type assumes the user shares their credentials with the client. The client uses these to obtain a token from the authorization server. It then accesses the resources from the resource server on behalf of the user. **We use this authentication flow only if the client and the authorzation server are built and maintained by the same org.**
+  * Requesting an access token using the password grant type
+    * **`grant_type`** with value password
+    * **`client_id`** and **`client_secret`**, which are the credentials used by the client to authenticate itself.
+    * **`scope`**, granted authorities.
+    * **`username`** and **`password`**, which are the user credentials.(Plain text values in the request header)
+  * Using an access token to call resources.
+    * Consider using the `authorization code grant type` because the the `password grant type` is authorized using shared user credentials from the client app to the server.
+* **`Refresh token`**
+  * The client has an access token that expired. To avoid forcing the user to log in again, the client uses a refresh token to issue a new access token.
+* **`Client credentials`**
+  * This is the simplest of grant type. A general use-case senario is *when no users is involved* which is to implement authentication between two applications.
