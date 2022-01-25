@@ -228,3 +228,36 @@ OAuth 2 components:
   * The client has an access token that expired. To avoid forcing the user to log in again, the client uses a refresh token to issue a new access token.
 * **`Client credentials`**
   * This is the simplest of grant type. A general use-case senario is *when no users is involved* which is to implement authentication between two applications.
+
+### A basic example of OAuth2
+```Java
+@Configuration
+public class OAuthConfig extends WebSecurityConfigurerAdapter{
+
+     private ClientRegistration clientRegistration(){
+        return CommonOAuth2Provider.GITHUB
+                .getBuilder("github")
+                .clientId("registed github client id")
+                .clientSecret("generated client secret")
+                .build();
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception{
+        http.oauthLogin();
+        http.authorizeRequests()
+            .anyRequest()
+                .authenticated();
+    }
+}
+```
+>- When we add the **`http.oauthLogin();`**, it simply adds a new authentication filter(**Oauth2LoginAuthenticationLoginFilter**) to the filter chain. The Oauth2LoginAuthenticationFilter will intercept requests and apply OAuth 2 authentication logic.
+* ClientRegistration contract in Spring security.
+  * Client Id and client secret
+  * Grant type used for authentication
+  * Redirect URI
+  * Scopes
+
+* Implement the *`ClientRegistrationRepository`*
+  * The **`ClientRegistrationRepository`** interface is similar to the UserDetailsService interface. A ClientRegistrationRepository object finds the ClientRegistration by its registration ID.
+  * Spring Security offers an implementation for ClientRegistrationRepository, which is **`InMemoryClientRegistrationRepository`**
