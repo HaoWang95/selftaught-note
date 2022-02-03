@@ -62,3 +62,10 @@ public class Author{
     
 }
 ```
+
+#### EntityManager
+EntityManager.flush() will force the data to be persist in the database immediately as EntityManager.persist() will not.
+When we call em.persist(), we only makes the entity get managed by the `EntityManager` and adds the entity instance to the **`Persistence Context`**. An explicit flush will make the entity now residing in the **`Persistent Context`** to be moved to the db(which means the flush will execute sql in the db).
+
+em.remove(Object entity) means remove the entity instance, the database is affected right away. While em.detatch(Object entity) will remove the given entity from the **`Persistent context`**
+
