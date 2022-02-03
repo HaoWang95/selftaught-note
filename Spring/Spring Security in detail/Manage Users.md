@@ -261,3 +261,35 @@ public class OAuthConfig extends WebSecurityConfigurerAdapter{
 * Implement the *`ClientRegistrationRepository`*
   * The **`ClientRegistrationRepository`** interface is similar to the UserDetailsService interface. A ClientRegistrationRepository object finds the ClientRegistration by its registration ID.
   * Spring Security offers an implementation for ClientRegistrationRepository, which is **`InMemoryClientRegistrationRepository`**
+
+```Java
+@Configuration
+public class OAuth2Config extends WebSecurityConfigurerAdapter {
+
+    @Bean
+    public ClientRegistrationRepository clientRegistrationRepository(){
+        var client = clientRegistration();
+        return new InMemoryClientRegistrationRepository(client);
+    }
+
+    private ClientRegistration clientRegistration(){
+        return CommonOAuth2Provider.GITHUB
+                .getBuilder("github")
+                .clientId("client id")
+                .clientSecret("client secret")
+                .build();
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.oauth2Login(c -> {
+            c.clientRegistrationRepository(clientRegistrationRepository());
+        });
+        http.authorizeRequests().anyRequest().authenticated();
+    }
+}
+```
+
+## Implement an authentication server using OAuth2
+**The role of the authorization server is to authenticate user and provide token to the client.** The authorization server can identify the user. It provides an access token to the client. The client uses the access token to call resources exposed by the resource server.
+
