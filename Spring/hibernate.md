@@ -46,11 +46,16 @@ Mapping inheritance in a relational database is one of the most obvious object-r
 
 The strategies of JPA:
 > - InheritanceType.SINGLE_TABLE
+    * The entities from different classes with a common ancestor are placed in a single table
 > - InheritanceType.JOINED
-> - InheritanceType.TABLE_PER_CLASS.
+    * Each class has its table, and querying a subclass entity requires joining tables      
+> - InheritanceType.TABLE_PER_CLASS
+    * All properties of a class are placed in its table, no join is required.
+> - @MappedSupperclass -> The parent classes can't be entities.
 
-Single table inheritance is the default JPA strategy.
-One of the advantage of using inheritance in the Domain Model is the support of the polymorphic queries. When the application developer issues a select query against the entity.
+Entity inheritance means that we can use polymorphic queries for retrieving all the subclass entities when querying for a superclass.
+
+
 
 
 ## @OneToOne 
@@ -69,3 +74,41 @@ When we call em.persist(), we only makes the entity get managed by the `EntityMa
 
 em.remove(Object entity) means remove the entity instance, the database is affected right away. While em.detatch(Object entity) will remove the given entity from the **`Persistent context`**
 
+#### @DirtiesContext
+**`@DirtiesContext`** is a Spring testing annotation. It indicates the associated test or class modifies the ApplicationContext. 
+
+## Don't use unidirectional @OneToMany associations
+Bidirectional @OneToMany and @ManyToOne association mappings are fine. But we need to avoid unidirectional @OneToMany associations in domain model. Hibernate might create unexpected tables and execute more SQL statements.
+
+## JPA Cascade Type
+* ALL
+  * Propagates all operations, including Hibernate-specific ones, from a parent to a child entity.
+* PERSIST
+  * The persist operation makes a trasient instance persistent. The PERSISTENT propagates the persist operation from a parent to a child entity.
+* MERGE
+  * Propagates the merge operation from a parent to a child entity.
+* REMOVE
+  * Propagates the remove operation from parent to a child entity. CascadeType.DELETE is specific to Hibernate
+* REFRESH
+  * The child entity also get refreshed whenever the parent entity is refreshed.
+* DETACH
+  * When using CascadeType.DETACH, the child entity will alsoa get removed from the persistent context.
+
+### **@GeneratedValue**
+JPA specification supports 4 primary key generation strategies.
+* **GenerationType.Auto**
+  * This is the default generation type and lets the persistence provider to choose the generation strategy. For most popular databases, it selects the **GenerationType.SEQUENCE**.
+* **GenerationType.IDENTITY** is the easist to use but not the best one from a performance point of view. It relies on an auto-increment database column and generates the new value with each insert operation.
+* **GenerationType.SEQUENCE** is a `preferred way to generate primary key if our default JPA dialect is Hibernate.`
+  * It requires additional select statements to get the next value from a database sequence. But it has no performance impact for most applications. 
+```Java
+// Change the GenerationType.SEQUENCE by referencing a sequence generator
+@Entity
+@Table(name = "Conference")
+public class Conference
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "conf_generator")
+    @SequenceGenerator(name = "conf_generator", sequenceName = "conf_seq")
+    private Long id;
+}
+```
