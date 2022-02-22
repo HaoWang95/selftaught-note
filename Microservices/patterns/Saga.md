@@ -4,6 +4,7 @@ A saga is a sequence of local transactions. Each local transactions updates data
 ### Two challenges of saga
 * Lack of isolation
 * Rolling back changes when an error occurs
+  * Compensating transacations to roll back changes
 
 ## Coordinating sagas
 * **Choreography**, distrubute the decision making and sequencing among the saga participants. Primarily communicate by exchanging events.
@@ -23,4 +24,5 @@ A saga is a sequence of local transactions. Each local transactions updates data
     * Improves separation of concerns and simplifies the business logic
   * Disadvantages
     * Centralizing too much business logic in the orchestrator.
+
 
