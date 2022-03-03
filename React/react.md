@@ -31,3 +31,6 @@ getSnapshotBeforeUpdate(prevProps, prevState)
 
 ### **Hooks**
 Hooks are functions that let us hook into React state and lifecycle features from functional components.
+
+### **Lazy-loading**
+React Suspense is a `React Component` that suspends a component being rendered until a certaion condition has been met and will display a fallback option. **React Suspense only works with dynamic importing(Lazy loading)**.
