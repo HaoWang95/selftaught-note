@@ -1,0 +1,3 @@
+# The -> Operator
+In C and C++, we can use . to call method on the object directly and `->` if we are calling the method on a pointer to the object and need to dereference the pointer first.
+Rust doesn't have an equivalent to the -> operator, instead, Rust has a feature called **`automatic referencing and dereferencing.`** The automatic referencing behavior works because methods have a clear receiver, which is the type of `self`. Given the receiver and name of a method, Rust can figure out definitely whether the method is **reading(&self), mutating(mut &self) or consuming(self).**
