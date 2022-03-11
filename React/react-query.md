@@ -20,3 +20,7 @@ Information relevant to the backend
   * staleTile is used for re-fetching
 * cacheTime
   * cache data expires after cacheTime
+
+# isFetching vs isLoading
+* isFetching -> the async query function has not yet resolved
+* isLoading -> no cached data, plus isFetching

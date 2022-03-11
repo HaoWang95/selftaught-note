@@ -5,3 +5,6 @@ A coroutine is a method that can be paused when we have a potentially long-runni
 ## What is concurrency, parallelism and multitasking
 When two tasks are happening concurrently, those tasks are happening at the same time.
 Parallelism, not only are there two or more tasks happening concurrently, but they are also executing at the same time.
+
+## Global Interpreter Lock
+GIL is a controversial topic, gil prevents one Python process from executing more than one Python Bytecode instruction at any given time. In CPython, memory is managed by a process known as reference counting. Reference counting works by keeping track of who currently needs access to a particular Python object, such as an integer, dictionary or list.
