@@ -16,9 +16,13 @@ When Node.js starts, it initializes the event loop, the processes that provide i
 Between each run of the event loop, Node.js checks if it is waiting for any asynchronous I/O or timers and shuts down cleanly if there are not any.
 
 ```JavaScript
+// in this code snippet, 
+// we schedule a timeout to execute after a 100ms threshold, then this script starts asynchornously
+// reading a file which takes 95ms.
 const fs = require('fs');
 
 const asyncOperation = (callback) => {
+    // Assume this takes 95ms to complete
     fs.readFile('path', callback);
 };
 
@@ -37,3 +41,4 @@ asyncOperation(() => {
     }
 });
 ```
+When the event loop enters the **poll** phase, it has an empty queue(fs.readFile() has not completed), so it will wait for the number of ms remaining until the soonest timer's threshold is reached. While it is waiting the 95ms pass, `fs.readFile()` finishes reading the file and its callback which takes 10ms to complete is added to the poll queue and executed. When the callback finishes, there are no more callbacks in the queue, so the event loop will see that the threshold of the soonest timer has been reached then wrap back to the timers phase to execute the timer's callback. As the code snippet above, the total delay between the timer being scheduled and its callback being executed will be 105ms.
