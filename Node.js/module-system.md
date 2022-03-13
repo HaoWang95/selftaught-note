@@ -21,3 +21,17 @@ When Node.js was created, it was conceived as a server runtime for JavaScript wi
 
 Then there was an official proposal for a standard module system: ESM or ECMAScript modules, this tries to bridge the gap between how modules are managed on browsers and servers.
 Now, ESM is becoming the de facto way to manage JavaScript modules in both browser and the server landscape.
+
+
+## CommonJS modules
+CommonJS is the first module system originally built into Node.js. The two main concepts of CommonJS specification:
+1. require is a function that allows you to import a module from a local filesystem.
+2. exports and module.exports are special variables that can be used to export public functionality from the current module.
+
+## The module cache
+Each module is only loaded and evaluated the first time it is required, since any subsquent call of require() will simply return the cached version.
+* It makes it possible to have cycles within module dependencies
+* It guarantees, to some extent, that the same instance is always returned when requiring the same module from within a given package.
+
+## ES modules
+The most important differentiator between ESM and CommonJS is that ES modules are static, whihc means that imports are described at the top level of every module and outside of any control flow statement.
