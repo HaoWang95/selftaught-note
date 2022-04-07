@@ -35,5 +35,25 @@ For teams
   * Authorization
 * Gateway concerns
 
-# Event-driven architecture
+## Event-driven architecture
 * Events can be consumed and produced via Event Bus(eg: kafka)
+
+# Sync communications
+* Rely on RPCs
+* Service discovery
+* Availability and latency
+  
+# Async communications
+Message bus communications
+
+**Eventual consistency and async comm/event driven architecture often go hand in hand.**
+
+### Accelerate: the science of devops
+* Deployment Frequency
+  * Deplpoyment frequency is the measure of how often the software is released to production
+* Lead time
+  * Time takes to build, test, and deploy a new increment of functionality
+* MTTR mean time to recovery
+  * When a service is interrupted, how long it takes to restore.
+* Change failure rate
+  * Change failure rate is the percentage of changes delivered to production that cause service degradation or immediately require remediation

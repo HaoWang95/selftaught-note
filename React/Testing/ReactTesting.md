@@ -21,6 +21,8 @@ React Testing Library is opinionated, as it provides a philosophy to test applic
     * Finds Tests
     * Runs tests
     * Determines whether tests pass or fail
+  * **it vs test**
+    * As the Jest docs state, **`it`** is an **alias** of **`test`**. So they have exactly the same from a functional point of view.
 
 ## Enzyme
 Enzyme is another powerful testing tool that can be utilized into a React app.
@@ -29,6 +31,7 @@ Enzyme is another powerful testing tool that can be utilized into a React app.
 ## Assertions
 * expect(element.textContent).toBe('String value here');
 * expect(elementArray).toHaveLength(10)
+* expect(basicUIComponent).toHaveTextContent('Some text content')
 
 > jest-dom comes with create-react-app
 > src/setupTest.ts imports it before each test, makes matchers available
