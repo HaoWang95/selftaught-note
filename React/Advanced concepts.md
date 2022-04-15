@@ -40,3 +40,11 @@ Context provides a way to pass data through the component tree without having to
 ## **Strict Mode**
 StrictMode is a tool for highlighting potential problems in an application. StrictMode does not render any visible UI. It activates additional checks and warnings for its descendants.
 Strict mode checks are run in development mode only, it does not impact the production build.
+
+
+## Controlled components and Uncontrolled components
+A controlled component is one that takes its current value through props and notifies changes through callbacks like onChange. A parent component controls it by handling the callback and managing its own state and passing new values as props to the controlled component. Think controlled component as dumb component.
+
+A uncontrolled component is one that stores its own state internally, and we query the DOM using a ref to find its current value when we need it. Which is more like manipulating traditional HTML.
+
+In short, uncontrolled components are like regular HTML form inputs for which we will not be able to manage the value ourselves but instead, the DOM will take care of handling the value and we can get this value by using a React ref. A controlled component is a React component that controls the values of input elements in a form by using the component state.
