@@ -48,3 +48,74 @@ A controlled component is one that takes its current value through props and not
 A uncontrolled component is one that stores its own state internally, and we query the DOM using a ref to find its current value when we need it. Which is more like manipulating traditional HTML.
 
 In short, uncontrolled components are like regular HTML form inputs for which we will not be able to manage the value ourselves but instead, the DOM will take care of handling the value and we can get this value by using a React ref. A controlled component is a React component that controls the values of input elements in a form by using the component state.
+
+
+## React Error Boundary
+```javascript
+import * as React from 'react'
+import ReactDOM from 'react-dom'
+
+function Greeting({subject}) {
+  return <div>Hello {subject.toUpperCase()}</div>
+}
+
+function Farewell({subject}) {
+  return <div>Goodbye {subject.toUpperCase()}</div>
+}
+
+function App() {
+  return (
+    <div>
+      <Greeting />
+      <Farewell />
+    </div>
+  )
+}
+
+ReactDOM.render(<App />, document.getElementById('root'))
+```
+* The code snipet above will report a TypeError for sure when we run it. We'll need a mechanism in React projects to handle the errors.
+
+>- One of the solution can be using try-catch
+```javascript
+import * as React from 'react'
+import ReactDOM from 'react-dom'
+
+function ErrorFallback({error}) {
+  return (
+    <div role="alert">
+      <p>Something went wrong:</p>
+      <pre style={{color: 'red'}}>{error.message}</pre>
+    </div>
+  )
+}
+
+function Greeting({subject}) {
+  try {
+    return <div>Hello {subject.toUpperCase()}</div>
+  } catch (error) {
+    return <ErrorFallback error={error} />
+  }
+}
+
+function Farewell({subject}) {
+  try {
+    return <div>Goodbye {subject.toUpperCase()}</div>
+  } catch (error) {
+    return <ErrorFallback error={error} />
+  }
+}
+
+function App() {
+  return (
+    <div>
+      <Greeting />
+      <Farewell />
+    </div>
+  )
+}
+
+ReactDOM.render(<App />, document.getElementById('root'))
+```
+
+* Error boundaries work like a JavaScript catch{} block, but for components. **Only class component can be error boundaries.**
