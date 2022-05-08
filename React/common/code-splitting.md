@@ -1,0 +1,2 @@
+# Code splitting and lazy loading
+The react code-splitting and lazy loading is usually associated with **react router**. It is required to use **React.Suspense** to render the component/page and provide a **fallback element** to handle the fallback.
