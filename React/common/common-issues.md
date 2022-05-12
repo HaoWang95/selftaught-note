@@ -34,3 +34,6 @@ This error also comes with **(BREAKING CHANGE: The request `filename` failed to 
 
 1. Delete `node_modules` and `yarn.lock` permanently.
 2. yarn install or npm i to reinstall every dependencies
+
+## React-router, difference between `NavLink` and `Link`
+The Link component is used to navigate the different routes on the site. But NavLink is used to add the style attributes to the active routes.
