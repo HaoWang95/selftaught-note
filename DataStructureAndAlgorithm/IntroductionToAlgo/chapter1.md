@@ -1,0 +1,2 @@
+# The Role of Algorithms in computing
+An algorithm is a well-defined computational procedure that takes some value, or a set of vallues, as input and produces some value, or set of values, as output in finite amout of time. An algorithm is a sequence of computational staps that transform the input into the output.
